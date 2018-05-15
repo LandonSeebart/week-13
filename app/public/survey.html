@@ -8,116 +8,78 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 </head>
 <body>
-
-  <div class="container">
-
-    <div class="jumbotron">
-      <h1 class="text-center"><span class="fa fa-fire"></span>Friend Survey</h1>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12">
-
-        <!-- Reservation Page -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">Table Reservation</h4>
-          </div>
-          <div class="panel-body">
-
-            <form role="form">
-
-              <div class="form-group">
-                <label for="reserve-name">Name</label>
-                <input type="text" class="form-control" id="reserve-name">
-              </div>
-
-              <div class="form-group">
-                <label for="reserve-phone">Phone Number</label>
-                <input type="text" class="form-control" id="reserve-phone">
-              </div>
-
-              <div class="form-group">
-                <label for="reserve-email">Email</label>
-                <input type="text" class="form-control" id="reserve-email">
-              </div>
-
-              <div class="form-group">
-                <label for="reserve-unique-id">Unique ID</label>
-                <input type="text" class="form-control" id="reserve-unique-id">
-              </div>
-
-              <button type="submit" class="btn btn-primary submit">Submit</button>
-            </form>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-
-    <footer class="footer">
-      <div class="container">
-        <p><a href="/api/tables">Friends API Link</a></p>
-      </div>
-    </footer>
-
-  </div>
-
+    <form>
+    
+    <h3>I like cars.</h3> 
+    <select id="question-one" name="question1">
+      <option value="1">1 (Strongly Disagree)</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5 (Strongly Agree</option>
+    </select>
+    <h3>I like planes.</h3>
+    <select id="question-two" name="question2">
+        <option value="1">1 (Strongly Disagree)</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5 (Strongly Agree</option>
+      </select>
+      <h3>I like robots.</h3>
+      <select id="question-three" name="question3">
+          <option value="1">1 (Strongly Disagree)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (Strongly Agree</option>
+      </select>
+      <h3>I like terminator 2.</h3>
+      <select id="question-four" name="question4">
+          <option value="1">1 (Strongly Disagree)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (Strongly Agree</option>
+      </select>
+      <h3>I am done.</h3>
+      <select id="question-five" name="question5">
+          <option value="1">1 (Strongly Disagree)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (Strongly Agree</option>
+        </select>
+    <br><br>
+    <input type="submit">
+  </form>
 </body>
 </html>
 
-<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
 <script type="text/javascript">
 
-    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
-    // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
-    // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
-    // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
-
-    $(".submit").on("click", function(event) {
+    $( "form" ).submit(function( event ) {
       event.preventDefault();
 
-      // Here we grab the form elements
-      var newReservation = {
-        customerName: $("#reserve-name").val().trim(),
-        phoneNumber: $("#reserve-phone").val().trim(),
-        customerEmail: $("#reserve-email").val().trim(),
-        customerID: $("#reserve-unique-id").val().trim()
+      const newResponseArray = {
+        name: $("#friend-name").val().trim(),
+        photo: $("#friend-photo").val().trim(),
+        scores: [$("#question-one").val().trim(), $("#question-two").val().trim(), $("#question-three").val().trim(), $("#question-four").val().trim(), $("#question-five").val().trim()]
       };
 
-      console.log(newReservation);
+      console.log(newResponseArray);
 
-      // This line is the magic. It"s very similar to the standard ajax function we used.
-      // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-      // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
-      // depending on if a tables is available or not.
-
-      $.post("/api/tables", newReservation,
+      $.post("/api/friends", newResponseArray,
         function(data) {
 
-          // If a table is available... tell user they are booked.
           if (data) {
-            alert("Yay! You are officially booked!");
+            alert("Done!");
           }
 
-          // If a table is available... tell user they on the waiting list.
-          else {
-            alert("Sorry you are on the wait list");
-          }
-
-          // Clear the form when submitting
-          $("#reserve-name").val("");
-          $("#reserve-phone").val("");
-          $("#reserve-email").val("");
-          $("#reserve-unique-id").val("");
-
+          $("#question-one").val("");
         });
-
     });
 
 </script>

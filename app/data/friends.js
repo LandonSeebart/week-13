@@ -1,4 +1,4 @@
-var friendArray = [
+const friendArray = [
   {
     name: "Joe",
     scores: [
