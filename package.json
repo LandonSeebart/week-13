@@ -1,0 +1,14 @@
+{
+  "name": "landon-friends",
+  "version": "1.0.0",
+  "description": "Helps you figure out who your best friend should be",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+ }
+ 
